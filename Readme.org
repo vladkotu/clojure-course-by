@@ -1,1 +1,12 @@
 * Central repo
+  Start server
+  #+begin_src sh
+    cd task02
+    lein run
+  #+end_src
+  
+  Start client
+  #+begin_src sh
+    cd task02-client
+    clj -m task02.task02-client
+  #+end_src

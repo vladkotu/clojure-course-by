@@ -1,5 +1,4 @@
 (ns task02.network
-  ;; (:use [task02 helpers query])
   (:require [clojure.java.io :as io]
             [clojure.string :as str]
             [clojure.edn :as edn]
@@ -7,12 +6,9 @@
             [task02.db :as db])
   (:import [java.net Socket ServerSocket InetAddress InetSocketAddress SocketTimeoutException]))
 
-;; Объявить переменную для синхронизации между потоками. Воспользуйтесь promise
-(def ^:private should-be-finished (promise))
-
 (set! *warn-on-reflection* true)
 
-(pr-str [{:a 1}])
+(def ^:private should-be-finished (promise))
 
 (defn handle-request [^Socket sock]
   (try
@@ -28,8 +24,6 @@
     (finally
       (.close sock))))
 
-
-;; Hint: future, deliver
 (defn- run-loop [^ServerSocket server-sock]
   (try
     (let [sock (.accept server-sock)]
@@ -50,9 +44,3 @@
       (when-not (realized? should-be-finished)
         (recur (run-loop server-socket))))
     (.close server-socket)))
-
-;; (db/load-initial-data)
-;; (run 9999)
-
-;; (def ^:private should-be-finished (promise))
-;; (realized? should-be-finished)
